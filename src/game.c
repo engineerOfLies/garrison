@@ -10,6 +10,7 @@
 #include "gf2d_camera.h"
 #include "gf3d_texture.h"
 #include "gf3d_entity.h"
+#include "gf3d_cliplayers.h"
 
 #include "gf2d_sprite.h"
 #include "gf2d_font.h"
@@ -95,6 +96,8 @@ void game_setup(int argc, char * argv[])
     gf3d_entity_system_init(1024);
     gf2d_windows_init(128,"config/windows.cfg");
     gf2d_draw_manager_init(3000);
+    gf3d_cliplayers_init("config/cliplayers.cfg");
+
     res = gf3d_vgraphics_get_resolution();
     gf2d_camera_set_dimensions(0,0,(Uint32)res.x,(Uint32)res.y);
     SDL_ShowCursor(SDL_DISABLE);

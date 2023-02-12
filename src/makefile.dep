@@ -21,12 +21,12 @@ game.o: game.c ../gf3d/gfc/simple_logger/include/simple_logger.h \
  ../gf3d/gfc/include/gfc_primitives.h ../gf3d/gfc/include/gfc_matrix.h \
  ../gf3d/include/gf2d_body.h ../gf3d/include/gf2d_actor.h \
  ../gf3d/include/gf2d_sprite.h ../gf3d/include/gf3d_model.h \
- ../gf3d/include/gf3d_mesh.h ../gf3d/include/gf2d_sprite.h \
- ../gf3d/include/gf2d_font.h ../gf3d/include/gf2d_draw.h \
- ../gf3d/include/gf2d_actor.h ../gf3d/include/gf2d_mouse.h \
- ../gf3d/include/gf2d_windows.h ../gf3d/include/gf2d_windows_common.h \
- ../gf3d/include/gf2d_windows.h ../include/level.h \
- ../gf3d/include/gf2d_space.h ../include/space_bug.h
+ ../gf3d/include/gf3d_mesh.h ../gf3d/include/gf3d_cliplayers.h \
+ ../gf3d/include/gf2d_sprite.h ../gf3d/include/gf2d_font.h \
+ ../gf3d/include/gf2d_draw.h ../gf3d/include/gf2d_actor.h \
+ ../gf3d/include/gf2d_mouse.h ../gf3d/include/gf2d_windows.h \
+ ../gf3d/include/gf2d_windows_common.h ../gf3d/include/gf2d_windows.h \
+ ../include/level.h ../gf3d/include/gf2d_space.h ../include/space_bug.h
 level.o: level.c ../gf3d/gfc/simple_logger/include/simple_logger.h \
  ../gf3d/gfc/simple_json/include/simple_json.h \
  ../gf3d/gfc/simple_json/include/simple_json_list.h \
