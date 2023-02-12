@@ -21,6 +21,7 @@ Entity *space_bug_new(Vector2D position)
     ent->draw = space_bug_draw;
     ent->shape = gfc_shape_circle(0,0, 10);// shape position becomes offset from entity position, in this case zero
     ent->body.shape = &ent->shape;
+    ent->body.worldclip = 1;
     vector2d_copy(ent->body.position,position);
     ent->speed = 2.5;
     level_add_entity(level_get_active_level(),ent);
@@ -35,6 +36,7 @@ void space_bug_draw(Entity *self)
     vector2d_add(drawPosition,self->body.position,camera);
     gf2d_draw_circle(drawPosition,10,GFC_COLOR_YELLOW);
 }
+
 void space_bug_think(Entity *self)
 {
     Vector2D m,dir,camera,position;
