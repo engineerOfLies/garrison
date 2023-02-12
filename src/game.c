@@ -56,6 +56,7 @@ int main(int argc, char * argv[])
         gf2d_font_update();
         gf2d_windows_update_all();
         gf3d_entity_think_all();
+        level_update(level_get_active_level());
         gf3d_entity_update_all();
         gf2d_camera_bind();
         gf3d_vgraphics_render_start();

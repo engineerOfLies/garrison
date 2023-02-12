@@ -107,33 +107,40 @@ Level *level_load(const char *filename)
 
 int level_shape_clip(Level *level, Shape shape)
 {
-    int i,c;
-    Shape *clip;
+    List *collisions;
     if (!level)return 0;
-    c = gfc_list_get_count(level->clips);
-    for (i = 0; i < c; i++)
+    
+    collisions = gf2d_space_static_shape_check(level->space, shape, NULL);
+    if (collisions)
     {
-        clip = gfc_list_get_nth(level->clips,i);
-        if (!clip)continue;
-        if (gfc_shape_overlap(*clip, shape))return 1;
+        gfc_list_delete(collisions);
+        return 1;
     }
     return 0;
 }
 
 void level_build_clip_space(Level *level)
 {
-    Shape *shape;
+    Shape shape;
     int i,j;
-    if (!level)return;
+    if ((!level)||(!level->tileLayer))return;
+    level->space = gf2d_space_new_full(
+        3,
+        gfc_rect(0,0,level->tileLayer->frameWidth,level->tileLayer->frameHeight),
+        0.01,
+        vector2d(0,0),
+        1,
+        1,//slop
+        1,//use hash or not
+        vector2d(128,128));
+    if (!level->space)return;
     for (j = 0;j < level->mapSize.y;j++)//j is row
     {
         for (i = 0; i < level->mapSize.x;i++)// i is column
         {
             if (level->tileMap[(j * (int)level->mapSize.x) + i] <= 0)continue;//skip zero
-            shape = gfc_allocate_array(sizeof(Shape),1);
-            if (!shape)continue;
-            *shape = gfc_shape_rect(i * level->tileSize.x, j * level->tileSize.y, level->tileSize.x,level->tileSize.y);
-            gfc_list_append(level->clips,shape);
+            shape = gfc_shape_rect(i * level->tileSize.x, j * level->tileSize.y, level->tileSize.x,level->tileSize.y);
+            gf2d_space_add_static_shape(level->space,shape);
         }
     }
 }
@@ -190,6 +197,12 @@ void level_build(Level *level)
     level_build_clip_space(level);
 }
 
+void level_update(Level *level)
+{
+    if (!level)return;
+    gf2d_space_update(level->space);
+}
+
 void level_draw(Level *level)
 {
     if (!level)return;
@@ -201,7 +214,6 @@ Level *level_new()
 {
     Level *level;
     level = gfc_allocate_array(sizeof(Level),1);
-    level->clips = gfc_list_new();
     return level;
 }
 
@@ -211,9 +223,14 @@ void level_free(Level *level)
     if (level->tileSet)gf2d_sprite_free(level->tileSet);
     if (level->tileLayer)gf2d_sprite_free(level->tileLayer);
     if (level->tileMap)free(level->tileMap);
-    gfc_list_foreach(level->clips,free);
-    gfc_list_delete(level->clips);
+    if (level->space)gf2d_space_free(level->space);
     free(level);
+}
+
+void level_add_entity(Level *level, Entity *entity)
+{
+    if ((!level)||(!entity))return;
+    gf2d_space_add_body(level->space,&entity->body);
 }
 
 /*eol@eof*/

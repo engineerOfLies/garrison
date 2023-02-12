@@ -4,6 +4,8 @@
 #include "gfc_text.h"
 #include "gfc_shape.h"
 
+#include "gf3d_entity.h"
+#include "gf2d_space.h"
 #include "gf2d_sprite.h"
 
 typedef struct
@@ -21,7 +23,7 @@ typedef struct
     int        *tileMap;    //WTF???
     Sprite     *background; //the floor
     Sprite     *tileLayer;  //for fast drawing
-    List       *clips;      //list of static shapes to clip against in the game world
+    Space      *space;      //clip space for the level
 }Level;
 
 /**
@@ -58,6 +60,11 @@ Level *level_load(const char *filename);
 void level_draw(Level *level);
 
 /**
+ * @brief run the physics for the things in the level
+ */
+void level_update(Level *level);
+
+/**
  * @brief allocate a blank level struct
  * @return NULL on error or an intialized level
  */
@@ -68,4 +75,9 @@ Level *level_new();
  */
 void level_free(Level *level);
 
+/**
+ * @brief add an entity to the clip space of the level
+ * @param entity the entity to add
+ */
+void level_add_entity(Level *level, Entity *entity);
 #endif
