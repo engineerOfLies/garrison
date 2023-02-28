@@ -20,8 +20,9 @@
 #include "gf2d_windows.h"
 #include "gf2d_windows_common.h"
 
+#include "hive.h"
 #include "level.h"
-#include "space_bug.h"
+#include "player.h"
 
 extern int __DEBUG;
 
@@ -46,14 +47,15 @@ int main(int argc, char * argv[])
     level = level_load("levels/test.level");
     level_set_active_level(level);
     
-    space_bug_new(vector2d(100,100));
+    hive_new(vector2d(100,100));
+    player_new(vector2d(500,500));
 
     /*main game loop*/
     while(!_done)
     {
         gfc_input_update();
-        gf2d_draw_manager_update();
         gf2d_mouse_update();
+        gf2d_draw_manager_update();
         gf2d_font_update();
         gf2d_windows_update_all();
         gf3d_entity_think_all();
@@ -64,6 +66,7 @@ int main(int argc, char * argv[])
                 //2D draws
                 level_draw(level_get_active_level());
                 gf3d_entity_draw_all_2d();
+                gf3d_entity_draw(player_get());
                 gf2d_windows_draw_all();
                 gf2d_mouse_draw();
         gf3d_vgraphics_render_end();
@@ -87,8 +90,8 @@ void game_setup(int argc, char * argv[])
     init_logger("gf2d.log",0);
     gfc_pak_manager_init();
     slog("---==== BEGIN ====---");
-    gfc_input_init("config/input.cfg");
     gf3d_vgraphics_init("config/setup.cfg");
+    gfc_input_init("config/input.cfg");
     gfc_audio_init(256,16,4,1,1,1);
     gf2d_font_init("config/font.cfg");
     gf2d_actor_init(1024);

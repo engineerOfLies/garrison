@@ -1,0 +1,23 @@
+{
+    "actor":
+    {
+        "sprite": "images/plasma_bolt.png",
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "framesPerLine": 16,
+        "scale": [0.5,0.5],
+        "center": [32,32],
+        "drawOffset": [-32,-32],
+        "color": [255,0,0,200],
+        "actionList":
+        [
+            {
+                "action": "default",
+                "startFrame": 0,
+                "endFrame": 15,
+                "frameRate": 0.05,
+                "type": "loop"
+            }
+        ]
+    }
+}

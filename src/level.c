@@ -34,7 +34,11 @@ Level *level_load(const char *filename)
     Level *level;
     if (!filename)return NULL;
     json = sj_load(filename);
-    if (!json)return NULL;
+    if (!json)
+    {
+        slog("failed to load level %s",filename);
+        return NULL;
+    }
     level = level_new();
     if (!level)
     {
@@ -101,6 +105,7 @@ Level *level_load(const char *filename)
         }
     }
     sj_free(json);
+    slog("level %s loaded",filename);
     level_build(level);
     return level;
 }
@@ -130,7 +135,7 @@ void level_build_clip_space(Level *level)
         0.01,
         vector2d(0,0),
         1,
-        1,//slop
+        1.1,//slop
         1,//use hash or not
         vector2d(128,128));
     if (!level->space)return;
@@ -156,6 +161,11 @@ void level_build(Level *level)
         slog("failed to create sprite for tileLayer");
         return;
     }
+    level->tileLayer->frameWidth = level->tileSize.x * level->mapSize.x;
+    level->tileLayer->frameHeight = level->tileSize.y * level->mapSize.y;
+    level->tileLayer->framesPerLine = 1;
+    gf2d_camera_set_bounds(0,0,level->tileLayer->frameWidth,level->tileLayer->frameHeight);
+
     // if there is a default surface, free it
     if (level->tileLayer->surface)SDL_FreeSurface(level->tileLayer->surface);
     //create a surface the size we need it
@@ -189,11 +199,7 @@ void level_build(Level *level)
     }
     //convert it to a texture
     level->tileLayer->texture = gf3d_texture_convert_surface(level->tileLayer->surface);
-    level->tileLayer->frameWidth = level->tileLayer->surface->w;
-    level->tileLayer->frameHeight = level->tileLayer->surface->h;
-    level->tileLayer->framesPerLine = 1;
     gf2d_sprite_create_vertex_buffer(level->tileLayer);
-    gf2d_camera_set_bounds(0,0,level->tileLayer->surface->w,level->tileLayer->surface->h);
     level_build_clip_space(level);
 }
 
@@ -208,6 +214,12 @@ void level_draw(Level *level)
     if (!level)return;
     gf2d_sprite_draw_image(level->background,gf2d_camera_get_offset());
     gf2d_sprite_draw_image(level->tileLayer,gf2d_camera_get_offset());
+}
+
+Space *level_get_space(Level *level)
+{
+    if (!level)return NULL;
+    return level->space;
 }
 
 Level *level_new()

@@ -1,0 +1,23 @@
+{
+    "actor":
+    {
+        "sprite": "images/entities/hive.png",
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "framesPerLine": 16,
+        "center": [32,32],
+        "drawOffset": [-32,-32],
+        "scale": [1,1],
+        "color": [255,255,255,255],
+        "actionList":
+        [
+            {
+                "action": "idle",
+                "startFrame": 0,
+                "endFrame": 0,
+                "frameRate": 0,
+                "type": "none"
+            }
+        ]
+    }
+}

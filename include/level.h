@@ -24,6 +24,7 @@ typedef struct
     Sprite     *background; //the floor
     Sprite     *tileLayer;  //for fast drawing
     Space      *space;      //clip space for the level
+    List       *entities;   //the entities in this level
 }Level;
 
 /**
@@ -80,4 +81,12 @@ void level_free(Level *level);
  * @param entity the entity to add
  */
 void level_add_entity(Level *level, Entity *entity);
+
+/**
+ * @brief get the collision space for the level
+ * @param level the level to get from
+ * @return NULL on error or the space
+ */
+Space *level_get_space(Level *level);
+
 #endif

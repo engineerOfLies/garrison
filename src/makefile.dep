@@ -26,7 +26,31 @@ game.o: game.c ../gf3d/gfc/simple_logger/include/simple_logger.h \
  ../gf3d/include/gf2d_draw.h ../gf3d/include/gf2d_actor.h \
  ../gf3d/include/gf2d_mouse.h ../gf3d/include/gf2d_windows.h \
  ../gf3d/include/gf2d_windows_common.h ../gf3d/include/gf2d_windows.h \
- ../include/level.h ../gf3d/include/gf2d_space.h ../include/space_bug.h
+ ../include/hive.h ../include/level.h ../gf3d/include/gf2d_space.h \
+ ../include/player.h
+hive.o: hive.c ../gf3d/gfc/simple_logger/include/simple_logger.h \
+ ../gf3d/include/gf3d_vgraphics.h ../gf3d/gfc/include/gfc_vector.h \
+ ../gf3d/gfc/include/gfc_types.h ../gf3d/gfc/include/gfc_matrix.h \
+ ../gf3d/gfc/include/gfc_vector.h ../gf3d/include/gf3d_pipeline.h \
+ ../gf3d/gfc/include/gfc_types.h ../gf3d/include/gf3d_uniform_buffers.h \
+ ../gf3d/include/gf3d_texture.h ../gf3d/gfc/include/gfc_text.h \
+ ../gf3d/gfc/include/gfc_color.h ../gf3d/include/gf3d_commands.h \
+ ../gf3d/include/gf2d_draw.h ../gf3d/gfc/include/gfc_list.h \
+ ../gf3d/gfc/include/gfc_shape.h \
+ ../gf3d/gfc/simple_json/include/simple_json.h \
+ ../gf3d/gfc/simple_json/include/simple_json_list.h \
+ ../gf3d/gfc/simple_json/include/simple_json_string.h \
+ ../gf3d/gfc/simple_json/include/simple_json_types.h \
+ ../gf3d/gfc/simple_json/include/simple_json_object.h \
+ ../gf3d/gfc/simple_json/include/simple_json_value.h \
+ ../gf3d/gfc/simple_json/include/simple_json_error.h \
+ ../gf3d/gfc/include/gfc_color.h ../gf3d/include/gf2d_camera.h \
+ ../include/level.h ../gf3d/include/gf3d_entity.h \
+ ../gf3d/gfc/include/gfc_primitives.h ../gf3d/gfc/include/gfc_matrix.h \
+ ../gf3d/include/gf2d_body.h ../gf3d/include/gf2d_actor.h \
+ ../gf3d/include/gf2d_sprite.h ../gf3d/include/gf3d_model.h \
+ ../gf3d/include/gf3d_mesh.h ../gf3d/include/gf2d_space.h \
+ ../gf3d/include/gf2d_sprite.h ../include/space_bug.h ../include/hive.h
 level.o: level.c ../gf3d/gfc/simple_logger/include/simple_logger.h \
  ../gf3d/gfc/simple_json/include/simple_json.h \
  ../gf3d/gfc/simple_json/include/simple_json_list.h \
@@ -49,6 +73,56 @@ level.o: level.c ../gf3d/gfc/simple_logger/include/simple_logger.h \
  ../gf3d/include/gf2d_actor.h ../gf3d/include/gf2d_sprite.h \
  ../gf3d/include/gf3d_model.h ../gf3d/include/gf3d_mesh.h \
  ../gf3d/include/gf2d_space.h ../gf3d/include/gf2d_sprite.h
+player.o: player.c ../gf3d/gfc/simple_logger/include/simple_logger.h \
+ ../gf3d/gfc/include/gfc_input.h ../gf3d/gfc/include/gfc_text.h \
+ ../gf3d/gfc/include/gfc_types.h ../gf3d/gfc/include/gfc_color.h \
+ ../gf3d/gfc/include/gfc_vector.h ../gf3d/gfc/include/gfc_list.h \
+ ../gf3d/include/gf3d_vgraphics.h ../gf3d/gfc/include/gfc_vector.h \
+ ../gf3d/gfc/include/gfc_matrix.h ../gf3d/include/gf3d_pipeline.h \
+ ../gf3d/gfc/include/gfc_types.h ../gf3d/include/gf3d_uniform_buffers.h \
+ ../gf3d/include/gf3d_texture.h ../gf3d/gfc/include/gfc_text.h \
+ ../gf3d/include/gf3d_commands.h ../gf3d/include/gf2d_draw.h \
+ ../gf3d/gfc/include/gfc_list.h ../gf3d/gfc/include/gfc_shape.h \
+ ../gf3d/gfc/simple_json/include/simple_json.h \
+ ../gf3d/gfc/simple_json/include/simple_json_list.h \
+ ../gf3d/gfc/simple_json/include/simple_json_string.h \
+ ../gf3d/gfc/simple_json/include/simple_json_types.h \
+ ../gf3d/gfc/simple_json/include/simple_json_object.h \
+ ../gf3d/gfc/simple_json/include/simple_json_value.h \
+ ../gf3d/gfc/simple_json/include/simple_json_error.h \
+ ../gf3d/gfc/include/gfc_color.h ../gf3d/include/gf2d_camera.h \
+ ../gf3d/include/gf2d_mouse.h ../gf3d/gfc/include/gfc_primitives.h \
+ ../gf3d/gfc/include/gfc_matrix.h ../gf3d/include/gf2d_actor.h \
+ ../gf3d/include/gf2d_sprite.h ../include/level.h \
+ ../gf3d/include/gf3d_entity.h ../gf3d/include/gf2d_body.h \
+ ../gf3d/include/gf3d_model.h ../gf3d/include/gf3d_mesh.h \
+ ../gf3d/include/gf2d_space.h ../gf3d/include/gf2d_sprite.h \
+ ../include/projectile.h ../include/player.h
+projectile.o: projectile.c \
+ ../gf3d/gfc/simple_logger/include/simple_logger.h \
+ ../gf3d/include/gf3d_vgraphics.h ../gf3d/gfc/include/gfc_vector.h \
+ ../gf3d/gfc/include/gfc_types.h ../gf3d/gfc/include/gfc_matrix.h \
+ ../gf3d/gfc/include/gfc_vector.h ../gf3d/include/gf3d_pipeline.h \
+ ../gf3d/gfc/include/gfc_types.h ../gf3d/include/gf3d_uniform_buffers.h \
+ ../gf3d/include/gf3d_texture.h ../gf3d/gfc/include/gfc_text.h \
+ ../gf3d/gfc/include/gfc_color.h ../gf3d/include/gf3d_commands.h \
+ ../gf3d/include/gf2d_draw.h ../gf3d/gfc/include/gfc_list.h \
+ ../gf3d/gfc/include/gfc_shape.h \
+ ../gf3d/gfc/simple_json/include/simple_json.h \
+ ../gf3d/gfc/simple_json/include/simple_json_list.h \
+ ../gf3d/gfc/simple_json/include/simple_json_string.h \
+ ../gf3d/gfc/simple_json/include/simple_json_types.h \
+ ../gf3d/gfc/simple_json/include/simple_json_object.h \
+ ../gf3d/gfc/simple_json/include/simple_json_value.h \
+ ../gf3d/gfc/simple_json/include/simple_json_error.h \
+ ../gf3d/gfc/include/gfc_color.h ../gf3d/include/gf2d_camera.h \
+ ../gf3d/include/gf2d_collision.h ../gf3d/include/gf2d_space.h \
+ ../gf3d/include/gf2d_body.h ../include/level.h \
+ ../gf3d/include/gf3d_entity.h ../gf3d/gfc/include/gfc_primitives.h \
+ ../gf3d/gfc/include/gfc_matrix.h ../gf3d/include/gf2d_actor.h \
+ ../gf3d/include/gf2d_sprite.h ../gf3d/include/gf3d_model.h \
+ ../gf3d/include/gf3d_mesh.h ../gf3d/include/gf2d_space.h \
+ ../gf3d/include/gf2d_sprite.h ../include/projectile.h
 space_bug.o: space_bug.c \
  ../gf3d/gfc/simple_logger/include/simple_logger.h \
  ../gf3d/include/gf3d_vgraphics.h ../gf3d/gfc/include/gfc_vector.h \
@@ -72,4 +146,4 @@ space_bug.o: space_bug.c \
  ../gf3d/include/gf2d_body.h ../gf3d/include/gf2d_actor.h \
  ../gf3d/include/gf2d_sprite.h ../gf3d/include/gf3d_model.h \
  ../gf3d/include/gf3d_mesh.h ../gf3d/include/gf2d_space.h \
- ../gf3d/include/gf2d_sprite.h ../include/space_bug.h
+ ../gf3d/include/gf2d_sprite.h ../include/player.h ../include/space_bug.h

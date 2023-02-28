@@ -1,20 +1,20 @@
 {
     "actor":
     {
-        "sprite": "images/entities/space_bug_top.png",
+        "sprite": "images/entities/ranger.png",
         "frameWidth": 128,
         "frameHeight": 128,
         "framesPerLine": 16,
-        "center": [64,74],
-        "drawOffset": [-64,-74],
-        "scale": [1,1],
-        "color": [255,255,20,255],
+        "center": [64,64],
+        "drawOffset": [-64,-64],
+        "scale": [1.5,1.5],
+        "color": [255,255,255,255],
         "actionList":
         [
             {
                 "action": "idle",
                 "startFrame": 0,
-                "endFrame": 8,
+                "endFrame": 15,
                 "frameRate": 0.05,
                 "type": "loop"
             }
