@@ -11,6 +11,7 @@
 void space_bug_think(Entity *self);
 void space_bug_draw(Entity *self);
 void space_bug_update(Entity *self);
+void space_bug_damage (Entity *self, float damage, Entity *inflictor);
 
 Entity *space_bug_new(Vector2D position)
 {
@@ -28,8 +29,10 @@ Entity *space_bug_new(Vector2D position)
     ent->body.cliplayer = 1;
     ent->body.data = ent;
     ent->body.team = 2;
+    ent->takeDamage = space_bug_damage;
     vector2d_copy(ent->body.position,position);
-    ent->speed = 2.5;
+    ent->speed = 2.25;
+    ent->health = 2;
     level_add_entity(level_get_active_level(),ent);
     return ent;
 }
@@ -43,9 +46,15 @@ void space_bug_draw(Entity *self)
     gf2d_draw_circle(drawPosition,10,GFC_COLOR_YELLOW);
 }
 
-void takeDamage (struct Entity_S *self, float damage, struct Entity_S *inflictor)
+void space_bug_damage (Entity *self, float damage, Entity *inflictor)
 {
-    
+    if (!self)return;
+    if (self->health < 0)return;// lets not beat a dead horse
+    self->health -= damage;
+    if (self->health <= 0)
+    {
+        gf3d_entity_free(self);
+    }
 }
 
 void space_bug_think(Entity *self)

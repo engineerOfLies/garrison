@@ -142,7 +142,7 @@ void player_think(Entity *self)
 
     if (gfc_input_command_pressed("attack")||(gf2d_mouse_button_pressed(1)))
     {
-        projectile_new(self, self->body.position,dir,10,1000,"actors/plasma_bolt.actor");
+        projectile_new(self, self->body.position,dir,10,1,"actors/plasma_bolt.actor");
     }
     gf2d_camera_center_on(self->body.position);
 }
