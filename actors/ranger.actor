@@ -14,9 +14,16 @@
             {
                 "action": "idle",
                 "startFrame": 0,
-                "endFrame": 15,
+                "endFrame": 16,
                 "frameRate": 0.05,
                 "type": "loop"
+            },
+            {
+                "action": "aim",
+                "startFrame": 19,
+                "endFrame": 24,
+                "frameRate": 0.05,
+                "type": "pass"
             }
         ]
     }

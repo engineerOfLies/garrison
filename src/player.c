@@ -25,6 +25,7 @@ Entity *player_new(Vector2D position)
     ent = gf3d_entity_new();
     if (!ent)return NULL;
     ent->actor = gf2d_actor_load("actors/ranger.actor");
+    ent->action = gf2d_actor_get_action_by_name(ent->actor,"idle");
     ent->think = player_think;
     ent->draw = player_draw;
     ent->free = player_free;

@@ -3,6 +3,7 @@
 #include "gf3d_vgraphics.h"
 #include "gf2d_draw.h"
 #include "gf2d_camera.h"
+#include "gf2d_collision.h"
 
 #include "level.h"
 #include "player.h"
@@ -46,6 +47,47 @@ void space_bug_draw(Entity *self)
     gf2d_draw_circle(drawPosition,10,GFC_COLOR_YELLOW);
 }
 
+void space_bug_overlap_fix(Entity *self)
+{
+    int i,c;
+    Vector2D correction = {0};
+    Vector2D dif;
+    Entity *other;
+    Collision *collide;
+    Shape shape = {0};
+    List *collision;
+    CollisionFilter filter = {0};
+    if (!self)return;
+    //TODO hit stuff
+    gfc_shape_copy(&shape,self->shape);
+    gfc_shape_move(&shape,self->body.position);
+    
+    filter.worldclip = 0;
+    filter.cliplayer = 1;
+    if (self->parent)
+    {
+        filter.ignore = &self->parent->body;         /**<this body will specifically be skipped in checks*/
+    }
+    collision = gf2d_collision_check_space_shape(level_get_space(level_get_active_level()), shape,filter);
+    
+    if (!collision)return;
+    c = gfc_list_get_count(collision);
+    for (i = 0; i < c; i++)
+    {
+        collide = gfc_list_get_nth(collision,i);
+        if (!collide)continue;
+        if (collide->body == NULL)continue;
+        if (!collide->body->data)continue;
+        other = collide->body->data;
+        if (other->body.team != self->body.team)continue;
+        vector2d_sub(dif,self->body.position,other->body.position);
+        vector2d_add(correction,correction,dif);
+    }
+    gf2d_collision_list_free(collision);
+    vector2d_normalize(&correction);
+    vector2d_add(self->body.position,self->body.position,correction);
+}
+
 void space_bug_damage (Entity *self, float damage, Entity *inflictor)
 {
     if (!self)return;
@@ -83,6 +125,7 @@ void space_bug_update(Entity *self)
 {
     if (!self)return;
     gf3d_entity_rotate_to_dir(self,self->body.velocity);
+    space_bug_overlap_fix(self);
 }
 
 /*eol@eof*/

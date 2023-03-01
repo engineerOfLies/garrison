@@ -141,9 +141,10 @@ space_bug.o: space_bug.c \
  ../gf3d/gfc/simple_json/include/simple_json_value.h \
  ../gf3d/gfc/simple_json/include/simple_json_error.h \
  ../gf3d/gfc/include/gfc_color.h ../gf3d/include/gf2d_camera.h \
- ../include/level.h ../gf3d/include/gf3d_entity.h \
- ../gf3d/gfc/include/gfc_primitives.h ../gf3d/gfc/include/gfc_matrix.h \
- ../gf3d/include/gf2d_body.h ../gf3d/include/gf2d_actor.h \
+ ../gf3d/include/gf2d_collision.h ../gf3d/include/gf2d_space.h \
+ ../gf3d/include/gf2d_body.h ../include/level.h \
+ ../gf3d/include/gf3d_entity.h ../gf3d/gfc/include/gfc_primitives.h \
+ ../gf3d/gfc/include/gfc_matrix.h ../gf3d/include/gf2d_actor.h \
  ../gf3d/include/gf2d_sprite.h ../gf3d/include/gf3d_model.h \
  ../gf3d/include/gf3d_mesh.h ../gf3d/include/gf2d_space.h \
  ../gf3d/include/gf2d_sprite.h ../include/player.h ../include/space_bug.h

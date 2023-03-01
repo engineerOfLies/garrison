@@ -47,11 +47,14 @@ void hive_draw(Entity *self)
 
 void hive_think(Entity *self)
 {
+    Vector2D position = self->body.position;
     if (!self)return;
     if (self->cooldown <= 0)
     {
         self->cooldown = 50;
-        space_bug_new(self->body.position);
+        position.x += gfc_crandom() * 2;
+        position.y += gfc_crandom() * 2;
+        space_bug_new(position);
     }else self->cooldown -= 0.1;
 }
 
