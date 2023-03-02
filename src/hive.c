@@ -52,8 +52,8 @@ void hive_think(Entity *self)
     if (self->cooldown <= 0)
     {
         self->cooldown = 50;
-        position.x += gfc_crandom() * 2;
-        position.y += gfc_crandom() * 2;
+        position.x += gfc_crandom() * 5;
+        position.y += gfc_crandom() * 5;
         space_bug_new(position);
     }else self->cooldown -= 0.1;
 }

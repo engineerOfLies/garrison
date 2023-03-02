@@ -24,6 +24,20 @@
                 "endFrame": 24,
                 "frameRate": 0.05,
                 "type": "pass"
+            },
+            {
+                "action": "shoot",
+                "startFrame": 25,
+                "endFrame": 29,
+                "frameRate": 0.05,
+                "type": "pass"
+            },
+            {
+                "action": "walk",
+                "startFrame": 32,
+                "endFrame": 49,
+                "frameRate": 0.05,
+                "type": "loop"
             }
         ]
     }

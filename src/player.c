@@ -79,7 +79,6 @@ void player_think(Entity *self)
         m.y = my;
         vector2d_add(m,m,camera);
         vector2d_sub(dir,m,self->body.position);
-        gf3d_entity_rotate_to_dir(self,dir);
 
         if (gfc_input_command_down("walkup"))
         {
@@ -100,6 +99,7 @@ void player_think(Entity *self)
         if ((walk.x)||(walk.y))
         {
             vector2d_normalize(&walk);
+            gf3d_entity_rotate_to_dir(self,walk);
             vector2d_scale(walk,walk,self->speed);
             vector2d_copy(self->body.velocity,walk);
         }
@@ -120,6 +120,7 @@ void player_think(Entity *self)
         if (axis > 0.1)walk.y = axis;
         if ((walk.x)||(walk.y))
         {
+            gf3d_entity_rotate_to_dir(self,walk);
             vector2d_scale(walk,walk,self->speed);
             vector2d_copy(self->body.velocity,walk);
         }
@@ -140,10 +141,36 @@ void player_think(Entity *self)
         vector2d_normalize(&dir);
         gf3d_entity_rotate_to_dir(self,dir);
     }
-
+    
     if (gfc_input_command_pressed("attack")||(gf2d_mouse_button_pressed(1)))
     {
+        dir = vector2d_from_angle(self->rotation);
         projectile_new(self, self->body.position,dir,10,1,"actors/plasma_bolt.actor");
+        if ((!self->action)||(gfc_strlcmp(self->action->name,"shoot")!=0))
+        {
+            self->action = gf2d_actor_set_action(self->actor, "shoot",&self->frame);
+            self->cooldown = gf2d_action_get_frames_remaining(self->action,self->frame);
+        }
+    }
+    if (self->cooldown <= 0)
+    {
+        if ((self->body.velocity.x)||(self->body.velocity.y))
+        {
+            //moving
+            if ((!self->action)||(gfc_strlcmp(self->action->name,"walk")!=0))
+            {
+                self->action = gf2d_actor_set_action(self->actor, "walk",&self->frame);
+                self->cooldown = 0;
+            }
+        }
+        else
+        {
+            if ((!self->action)||(gfc_strlcmp(self->action->name,"idle")!=0))
+            {
+                self->action = gf2d_actor_set_action(self->actor, "idle",&self->frame);
+                self->cooldown = 0;
+            }
+        }
     }
     gf2d_camera_center_on(self->body.position);
 }

@@ -85,7 +85,7 @@ void space_bug_overlap_fix(Entity *self)
     }
     gf2d_collision_list_free(collision);
     vector2d_normalize(&correction);
-    vector2d_add(self->body.position,self->body.position,correction);
+    vector2d_add(self->body.velocity,self->body.velocity,correction);
 }
 
 void space_bug_damage (Entity *self, float damage, Entity *inflictor)
@@ -104,6 +104,8 @@ void space_bug_think(Entity *self)
     Vector2D p,dir;
     if (!self)return;
     p = player_get_position();
+    vector2d_clear(self->body.velocity);
+    space_bug_overlap_fix(self);
     if (vector2d_magnitude_between(p,self->body.position) > 500)
     {
         vector2d_clear(self->body.velocity);        
@@ -115,17 +117,12 @@ void space_bug_think(Entity *self)
         vector2d_set_magnitude(&dir,self->speed);
         vector2d_copy(self->body.velocity,dir);
     }
-    else
-    {
-        vector2d_clear(self->body.velocity);
-    }
 }
 
 void space_bug_update(Entity *self)
 {
     if (!self)return;
     gf3d_entity_rotate_to_dir(self,self->body.velocity);
-    space_bug_overlap_fix(self);
 }
 
 /*eol@eof*/
