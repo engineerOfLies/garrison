@@ -34,8 +34,8 @@ Entity *projectile_new(Entity *parent, Vector2D position,Vector2D dir,float spee
     vector2d_scale(ent->body.velocity,dir,speed);
     gf3d_entity_rotate_to_dir(ent,ent->body.velocity);
     ent->rotation += GFC_HALF_PI;
-    ent->speed = 2.5;
-    ent->health = 100;
+    ent->speed = speed;
+    ent->health = 1000;
     ent->damage = damage;
     level_add_entity(level_get_active_level(),ent);
     return ent;

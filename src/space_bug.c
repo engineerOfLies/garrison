@@ -5,16 +5,18 @@
 #include "gf2d_camera.h"
 #include "gf2d_collision.h"
 
+#include "entity_common.h"
 #include "level.h"
 #include "player.h"
+#include "hive.h"
 #include "space_bug.h"
 
 void space_bug_think(Entity *self);
 void space_bug_draw(Entity *self);
 void space_bug_update(Entity *self);
-void space_bug_damage (Entity *self, float damage, Entity *inflictor);
+void space_bug_free(Entity *self);
 
-Entity *space_bug_new(Vector2D position)
+Entity *space_bug_new(Entity *parent,Vector2D position)
 {
     Entity *ent;
     ent = gf3d_entity_new();
@@ -24,16 +26,18 @@ Entity *space_bug_new(Vector2D position)
     ent->think = space_bug_think;
     ent->update = space_bug_update;
     ent->draw = space_bug_draw;
+    ent->free = space_bug_free;
     ent->shape = gfc_shape_circle(0,0, 10);// shape position becomes offset from entity position, in this case zero
     ent->body.shape = &ent->shape;
     ent->body.worldclip = 1;
     ent->body.cliplayer = 1;
     ent->body.data = ent;
     ent->body.team = 2;
-    ent->takeDamage = space_bug_damage;
+    ent->takeDamage = entity_damage;
     vector2d_copy(ent->body.position,position);
     ent->speed = 2.25;
     ent->health = 2;
+    ent->parent = parent;
     level_add_entity(level_get_active_level(),ent);
     return ent;
 }
@@ -88,14 +92,16 @@ void space_bug_overlap_fix(Entity *self)
     vector2d_add(self->body.velocity,self->body.velocity,correction);
 }
 
-void space_bug_damage (Entity *self, float damage, Entity *inflictor)
+void space_bug_free(Entity *self)
 {
     if (!self)return;
-    if (self->health < 0)return;// lets not beat a dead horse
-    self->health -= damage;
-    if (self->health <= 0)
+    if (self->parent)
     {
-        gf3d_entity_free(self);
+        hive_child_free(self->parent);
+    }
+    if (self->killer)
+    {
+        
     }
 }
 

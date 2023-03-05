@@ -11,5 +11,12 @@
  */
 Entity *hive_new(Vector2D position);
 
+/**
+ * @brief when an entity spawned by a hive dies, call this to let the hive know
+ * @param self the hive
+ */
+void hive_child_free(Entity *self);
+
+
 
 #endif

@@ -15,15 +15,27 @@ void player_think(Entity *self);
 void player_draw(Entity *self);
 void player_free(Entity *self);
 
-
 static Entity *ThePlayer = NULL;
 
+typedef struct
+{
+    Uint32 experience;
+    Uint32 level;
+    Uint32 meleeDamage;
+    Uint32 rangeDamage;
+    Uint32 attackSpeed;
+    Uint32 techLevel;
+    Uint32 armor;
+    Uint32 magic;
+}PlayerData;
 
 Entity *player_new(Vector2D position)
 {
+    PlayerData *data;
     Entity *ent;
     ent = gf3d_entity_new();
     if (!ent)return NULL;
+    gfc_line_cpy(ent->name,"player");
     ent->actor = gf2d_actor_load("actors/ranger.actor");
     ent->action = gf2d_actor_get_action_by_name(ent->actor,"idle");
     ent->think = player_think;
@@ -35,6 +47,20 @@ Entity *player_new(Vector2D position)
     ent->body.team = 1;
     vector2d_copy(ent->body.position,position);
     ent->speed = 2.5;
+    
+    data = gfc_allocate_array(sizeof(PlayerData),1);
+    if (data)
+    {
+        data->level = 1;
+        data->meleeDamage = 4;
+        data->rangeDamage = 2;
+        data->attackSpeed = 2;
+        data->techLevel = 2;
+        data->armor = 2;
+        data->magic = 2;
+        ent->data = data;
+    }
+    
     level_add_entity(level_get_active_level(),ent);
     ThePlayer = ent;
     return ent;
@@ -59,6 +85,23 @@ void player_draw(Entity *self)
     camera = gf2d_camera_get_offset();
     vector2d_add(drawPosition,self->body.position,camera);
     gf2d_draw_circle(drawPosition,10,GFC_COLOR_YELLOW);
+}
+
+void player_attack(Entity *self)
+{
+    Vector2D dir;
+    
+    PlayerData *data;
+    if ((!self)||(!self->data))return;
+    data = self->data;
+    
+    dir = vector2d_from_angle(self->rotation);
+    projectile_new(self, self->body.position,dir,5,data->rangeDamage,"actors/plasma_bolt.actor");
+    self->cooldown = 5/(data->attackSpeed?data->attackSpeed:1);
+    if ((!self->action)||(gfc_strlcmp(self->action->name,"shoot")!=0))
+    {
+        self->action = gf2d_actor_set_action(self->actor, "shoot",&self->frame);
+    }
 }
 
 void player_think(Entity *self)
@@ -144,13 +187,7 @@ void player_think(Entity *self)
     
     if (gfc_input_command_pressed("attack")||(gf2d_mouse_button_pressed(1)))
     {
-        dir = vector2d_from_angle(self->rotation);
-        projectile_new(self, self->body.position,dir,10,1,"actors/plasma_bolt.actor");
-        if ((!self->action)||(gfc_strlcmp(self->action->name,"shoot")!=0))
-        {
-            self->action = gf2d_actor_set_action(self->actor, "shoot",&self->frame);
-            self->cooldown = gf2d_action_get_frames_remaining(self->action,self->frame);
-        }
+        player_attack(self);
     }
     if (self->cooldown <= 0)
     {
